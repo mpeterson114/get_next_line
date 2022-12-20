@@ -40,7 +40,6 @@ static char *ft_after_line(char *str)
 static char *ft_read(int fd, char *str)
 {
 	char *buff;
-	char *temp;
 	int ret;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
@@ -48,26 +47,40 @@ static char *ft_read(int fd, char *str)
 	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	ret = read(fd, buff, BUFFER_SIZE);
-	if (ret <= 0)
+	ret = 1;
+	while (!ft_strchr(str , '\n') && ret != 0)
+	{
+		ret = read(fd, buff, BUFFER_SIZE);
+		if (ret == -1)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[ret] = '\0';
+		str = ft_strjoin(str, buff);
+	}
+	free (buff);
+	return (str);
+}
+
+
+	/*ret = read(fd, buff, BUFFER_SIZE);
+	if (ret < 0)
 		return (NULL);
 	while (ret > 0)
 	{
 		buff[ret] = '\0';
 		if (str == NULL)
 			str = ft_strdup(buff);
-		else
-		{
-			temp = ft_strjoin(str, buff);
-			free(str);
-			str = temp; 
-		}
+		temp = ft_strjoin(str, buff);
+		free(str);
+		str = temp; 
 		if (*str == '\n')
 			break ;
 	}
 	free(buff);
 	return (str);
-}
+}*/
 
 char *get_next_line(int fd)
 {
