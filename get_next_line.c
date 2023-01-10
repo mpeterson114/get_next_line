@@ -6,9 +6,11 @@ static char	*ft_line(char *str)
 	char *line;
 
 	i = 0;
+	if (!str[i])
+		return (NULL);
 	while (str[i] != '\n' && str[i])
 		i++;
-	line = (char *)malloc(sizeof(char) * i + 2);
+	line = (char *)malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -18,7 +20,10 @@ static char	*ft_line(char *str)
 		i++;
 	}
 	if (str[i] == '\n')
-		line[i++] = '\n';
+	{
+		line[i] = str[i];
+		i++;
+	}	
 	line[i] = '\0';
 	return (line);
 }
@@ -29,6 +34,22 @@ static char *ft_after_line(char *str)
 	char *temp;
 
 	i = 0;
+	/*while (str[i] && str[i] != '\n')
+		i++;
+	if (!str[i])
+	{
+		free(str);
+		return (NULL);
+	}
+	temp = (char *)malloc(sizeof(char) * (ft_strlen(str) - (i + 1)));
+	if (!temp)
+		return (NULL);
+	i++;
+	j = 0;
+	while (str[i])
+		temp[j++] = str[i++];
+	free(str);
+	return (temp);*/
 	while (str[i] != '\n' && str[i])
 		i++;
 	temp = ft_strdup(&str[i + 1]);
@@ -37,18 +58,29 @@ static char *ft_after_line(char *str)
 	return (str);
 }
 
+/*int	ft_newline(char *str)
+{
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		if (*str == '\n')
+			return (1);
+		str++;
+	}
+	return (0);
+}*/
+
 static char *ft_read(int fd, char *str)
 {
 	char *buff;
 	int ret;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (NULL);
-	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
 	ret = 1;
-	while (!ft_strchr(str , '\n') && ret != 0)
+	while (!ft_strchr(str, '\n') && ret != 0)
 	{
 		ret = read(fd, buff, BUFFER_SIZE);
 		if (ret == -1)
@@ -57,12 +89,17 @@ static char *ft_read(int fd, char *str)
 			return (NULL);
 		}
 		buff[ret] = '\0';
+		/*temp = str; 
+		if (!temp)
+		{
+			temp = malloc(sizeof(char) * 1);
+			temp[0] = '\0';
+		}*/
 		str = ft_strjoin(str, buff);
 	}
 	free (buff);
 	return (str);
 }
-
 
 	/*ret = read(fd, buff, BUFFER_SIZE);
 	if (ret < 0)
@@ -87,6 +124,8 @@ char *get_next_line(int fd)
 	static char *str;
 	char *line; 
 
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (NULL);
 	str = ft_read(fd, str);
 	if (!str)
 		return (NULL); 
