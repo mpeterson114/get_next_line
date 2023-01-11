@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 12:19:14 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/01/11 13:27:31 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char    *ft_strdup(const char *s1)
+/*char    *ft_strdup(const char *s1)
 {
         size_t  len;
         char    *dst;
@@ -13,7 +25,7 @@ char    *ft_strdup(const char *s1)
         return (dst);
 }
 
-/*char    *ft_substr(char const *s, unsigned int start, size_t len)
+char    *ft_substr(char const *s, unsigned int start, size_t len)
 {
         char    *sub;
         size_t  i;
@@ -38,7 +50,7 @@ char    *ft_strdup(const char *s1)
         return (sub);
 }*/
 
-size_t  ft_strlen(const char *s)
+size_t  ft_strlen(char *s)
 {
         size_t  i;
 
@@ -48,7 +60,7 @@ size_t  ft_strlen(const char *s)
         return (i);
 }
 
-void    *ft_memcpy(void *dst, const void *src, size_t n)
+/*void    *ft_memcpy(void *dst, const void *src, size_t n)
 {
         const char      *csrc;
         char            *cdst;
@@ -62,49 +74,45 @@ void    *ft_memcpy(void *dst, const void *src, size_t n)
         while (n--)
                 cdst[n] = csrc[n];
         return (cdst);
-}
+}*/
 
-char    *ft_strjoin(char *s1, char *s2)
+char    *ft_strjoin(char *line1, char *buff)
 {
         char    *new_str;
         size_t  len;
         size_t  i;
         size_t  j;
 
-        if (!s1)
+        if (!line1)
         {
-                s1 = (char *)malloc(sizeof(char) * 1);
-                s1[0] = '\0';
+                line1 = (char *)malloc(sizeof(char) * 1);
+                line1[0] = '\0';
         }
-        len = (ft_strlen(s1) + ft_strlen(s2) + 1);
+        if (!line1 || !buff)
+                return (NULL);
+        len = (ft_strlen(line1) + ft_strlen(buff) + 1);
         new_str = (char *)malloc(len * sizeof(char));
-        if (new_str == 0)
+        if (new_str == NULL)
                 return (NULL);
         i = -1;
-        while (s1[++i] != '\0')
-                new_str[i] = s1[i];
+        if (line1)
+                while (line1[++i] != '\0')
+                        new_str[i] = line1[i];
         j = 0;
-        while (s2[j] != '\0')
-        {
-                new_str[i++] = s2[j++];
-        }
-        new_str[i] = '\0';
-        free(s1);
+        while (buff[j] != '\0')
+                new_str[i++] = buff[j++];
+        new_str[i++] = '\0';
+        free(line1);
         return (new_str);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if ((unsigned char)s[i] == (unsigned char)c)
-			return ((char *)s + i);
-		i++;
-	}
+	while (*s && *s != (unsigned char)c)
+                s++;
+	if (*s == (unsigned char)c)
+		return ((char *)s);
 	if (((unsigned char)c) == '\0')
-		return ((char *)s + i);
+		return ((char *)s);
 	return (0);
 }
