@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 12:19:19 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/01/11 13:28:42 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-static char	*ft_line(char *str)
+char	*ft_line(char *str)
 {
 	int	i; 
 	char *line;
@@ -22,40 +34,44 @@ static char	*ft_line(char *str)
 	if (str[i] == '\n')
 	{
 		line[i] = str[i];
-		i++;
-	}	
+		i++;	
+	}
 	line[i] = '\0';
 	return (line);
 }
 
-static char *ft_after_line(char *str)
+char *ft_after_line(char *str)
 {
 	int i;
+	int j;
 	char *temp;
 
 	i = 0;
-	/*while (str[i] && str[i] != '\n')
+	if (!str)
+		return (NULL);
+	while (str[i] && str[i] != '\n')
 		i++;
 	if (!str[i])
 	{
 		free(str);
 		return (NULL);
 	}
-	temp = (char *)malloc(sizeof(char) * (ft_strlen(str) - (i + 1)));
+	temp = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!temp)
 		return (NULL);
-	i++;
 	j = 0;
+	i++;
 	while (str[i])
 		temp[j++] = str[i++];
+	temp[j] = '\0';
 	free(str);
-	return (temp);*/
-	while (str[i] != '\n' && str[i])
+	return (temp);
+	/*while (str[i] != '\n' && str[i])
 		i++;
 	temp = ft_strdup(&str[i + 1]);
 	free(str);
 	str = temp;
-	return (str);
+	return (str);*/
 }
 
 /*int	ft_newline(char *str)
@@ -71,12 +87,12 @@ static char *ft_after_line(char *str)
 	return (0);
 }*/
 
-static char *ft_read(int fd, char *str)
+char *ft_read(int fd, char *str)
 {
 	char *buff;
 	int ret;
 
-	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
 	ret = 1;
@@ -86,15 +102,10 @@ static char *ft_read(int fd, char *str)
 		if (ret == -1)
 		{
 			free(buff);
+			free(str);
 			return (NULL);
 		}
 		buff[ret] = '\0';
-		/*temp = str; 
-		if (!temp)
-		{
-			temp = malloc(sizeof(char) * 1);
-			temp[0] = '\0';
-		}*/
 		str = ft_strjoin(str, buff);
 	}
 	free (buff);
@@ -134,23 +145,25 @@ char *get_next_line(int fd)
 	return (line);
 }
 
-int main (int argc, char **argv)
+/*int main (void)
 {
 	int fd;
 	char *line;
 
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
-	line = "";
+	fd = open("abc.txt", O_RDONLY);
 
-	while (line != NULL)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-	}
-	fd = close(fd);
+	//test STDIN
+	//fd = 0;
+
+	line = get_next_line(fd);
+	printf("%s", line);
+	line = get_next_line(fd);
+	printf("%s", line);
+	//line = get_next_line(fd);
+	//printf("%s", line);
+	close(fd);
 	return (0);
-}
+}*/
 
 
 
