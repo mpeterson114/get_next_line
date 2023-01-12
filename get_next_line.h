@@ -22,14 +22,9 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-//char    *ft_strdup(const char *s1);
 size_t  ft_strlen(char *s);
 char    *ft_strjoin(char *line1, char *buff);
-//void    *ft_memcpy(void *dst, const void *src, size_t n);
-char	*ft_strchr(const char *s, int c);
-//char	*ft_line(char *str);
-//char *ft_after_line(char *str);
-//char *ft_read(int fd, char *str);
+char	*ft_strchr(char *s, int c);
 char	*ft_line(char *str);
 char *ft_after_line(char *str);
 char *ft_read(int fd, char *str);
