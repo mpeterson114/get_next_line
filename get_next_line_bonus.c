@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/13 11:49:30 by mpeterso          #+#    #+#             */
+/*   Updated: 2023/01/13 12:57:01 by mpeterso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line_bonus.h"
 
 char	*ft_line(char *str)
 {
-	int	i; 
-	char *line;
+	char	*line;
+	int		i;
 
 	i = 0;
 	if (!str[i])
@@ -22,17 +34,17 @@ char	*ft_line(char *str)
 	if (str[i] == '\n')
 	{
 		line[i] = str[i];
-		i++;	
+		i++;
 	}
 	line[i] = '\0';
 	return (line);
 }
 
-char *ft_after_line(char *str)
+char	*ft_after_line(char *str)
 {
-	int i;
-	int	j;
-	char *temp;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = 0;
 	if (!str)
@@ -59,7 +71,7 @@ char *ft_after_line(char *str)
 char	*ft_read(int fd, char *str)
 {
 	char	*buff;
-	int	ret;
+	int		ret;
 
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
@@ -81,37 +93,40 @@ char	*ft_read(int fd, char *str)
 	return (str);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *str;
-	char *line; 
+	static char	*str[OPEN_MAX];
+	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	str = ft_read(fd, str);
-	if (!str)
-		return (NULL); 
-	line = ft_line(str);
-	str = ft_after_line(str);
+	str[fd] = ft_read(fd, str[fd]);
+	if (!str[fd])
+		return (NULL);
+	line = ft_line(str[fd]);
+	str[fd] = ft_after_line(str[fd]);
 	return (line);
 }
 
-/*int main (void)
+/*int	main(void)
 {
 	int fd;
+	int fd2;
+	int i;
 	char *line;
 
 	fd = open("abc.txt", O_RDONLY);
-
-	//test STDIN
-	//fd = 0;
-
-	line = get_next_line(fd);
-	printf("%s", line);
-	line = get_next_line(fd);
-	printf("%s", line);
-	//line = get_next_line(fd);
-	//printf("%s", line);
+	fd2 = open("xyz.txt", O_RDONLY);
+	i = 1;
+	while (i < 6)
+	{
+		line = get_next_line(fd);
+		printf("line [%d]: %s", i, line);
+		line = get_next_line(fd2);
+		printf("line [%d]: %s", i, line);
+		i++;
+	}
 	close(fd);
+	close(fd2);
 	return (0);
 }*/
