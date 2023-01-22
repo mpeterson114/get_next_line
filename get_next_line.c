@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:19 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/01/13 13:04:03 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:15:01 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int fd;
     char *tab;
@@ -123,4 +123,4 @@ int	main(void)
     printf("%s", tab);
     close(fd);
 	return (0);
-}
+}*/
