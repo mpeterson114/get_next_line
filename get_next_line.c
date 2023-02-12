@@ -6,7 +6,7 @@
 /*   By: mpeterso <mpeterso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:19:19 by mpeterso          #+#    #+#             */
-/*   Updated: 2023/01/18 11:15:01 by mpeterso         ###   ########.fr       */
+/*   Updated: 2023/02/12 14:18:42 by mpeterso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,3 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*int	main(void)
-{
-	int fd;
-    char *tab;
-    fd = open("abc.txt", O_RDONLY);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    tab = get_next_line(fd);
-    printf("%s", tab);
-    close(fd);
-	return (0);
-}*/
