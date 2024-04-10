@@ -23,11 +23,11 @@ int main()
 	int 	fd;
 	char	*str;
 
-	//fd  = 0;  **test stdinput
-	fd = open ("fichero1", O_RDONLY);
-	//fd = open ("fichero2", O_RDONLY);
-	//fd = open ("fichero3", O_RDONLY);				--for bonus tests
-	//fd = open ("fichero4", O_RDONLY);
+	//fd  = 0;  					--test stdinput
+	fd = open ("1.txt", O_RDONLY);
+	//fd = open ("2.txt", O_RDONLY);
+	//fd = open ("3.txt", O_RDONLY);		--for bonus tests
+	//fd = open ("4.txt", O_RDONLY);
 	str = get_next_line(fd);
 	while(str != NULL)
 	{
