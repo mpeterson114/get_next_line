@@ -15,25 +15,23 @@
 #include <limits.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include "get_next_line.h"
 
 char	*get_next_line(int fd);
 
-int main()
+int main(int argc, char **argv)
 {
 	int 	fd;
-	char	*str;
+	char	*line;
 
 	//fd  = 0;  					--test stdinput
-	fd = open ("1.txt", O_RDONLY);
-	//fd = open ("2.txt", O_RDONLY);
-	//fd = open ("3.txt", O_RDONLY);		--for bonus tests
-	//fd = open ("4.txt", O_RDONLY);
-	str = get_next_line(fd);
-	while(str != NULL)
+	fd = open(argv[1], O_RDONLY); 
+	line = "";
+	while (line != NULL)
 	{
-		printf("|%s|\n", str);
-		free(str);
-		str = get_next_line(fd);
+		printf("%s", line);
+		line = get_next_line(fd);
 	}
-	//system("leaks a.out");
+	fd = close(fd);
+	return (0);
 }
